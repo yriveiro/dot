@@ -104,7 +104,7 @@ class Dot implements JsonSerializable
         return $this;
     }
 
-    public function have(string $path) : bool
+    public function contains(string $path) : bool
     {
         if (empty($path)) {
             throw new InvalidArgumentException("path can't be empty");

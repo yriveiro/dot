@@ -95,27 +95,27 @@ class DotTest extends TestCase
         $this->dot->set('', false);
     }
 
-    public function testHaveKey()
+    public function testContainsKey()
     {
         $this->dot->set('foo', 'bar');
 
-        $this->assertTrue($this->dot->have('foo'));
+        $this->assertTrue($this->dot->contains('foo'));
     }
 
-    public function testNotHaveKey()
+    public function testNotContainsKey()
     {
         $this->dot->set('foo', 'bar');
 
-        $this->assertFalse($this->dot->have('not-found'));
+        $this->assertFalse($this->dot->contains('not-found'));
     }
 
     /**
      * @expectedException InvalidArgumentException
      * @expectedMessage path can't be empty
      */
-    public function testHaveWithEmptyKey()
+    public function testContainsWithEmptyKey()
     {
-        $this->dot->have('');
+        $this->dot->contains('');
     }
 
     public function testMutableSet()
