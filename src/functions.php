@@ -22,6 +22,9 @@ function explode($path) : array
     return preg_split(SEPARATOR, $path);
 }
 
+/**
+ * @codeCoverageIgnore
+ */
 function json_error($error)
 {
     switch ($error) {
