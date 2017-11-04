@@ -15,7 +15,7 @@ This **static** method took a json encoded string and returns the repective data
 
 This method returns the given key as json.
 
-#### Parameters
+##### Parameters
 
 * `path`: the path we wan't to get as json, if null is passed will return all data.
 * `flags`: the flags that PHP json_encode function accept.
