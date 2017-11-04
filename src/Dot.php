@@ -26,10 +26,6 @@ class Dot implements JsonSerializable, IteratorAggregate
 
     public function get(string $path, $default = null)
     {
-        if (empty($path)) {
-            throw new InvalidArgumentException("path can't be empty");
-        }
-
         $keys = explode($path);
 
         if ($keys === false) {
@@ -41,10 +37,6 @@ class Dot implements JsonSerializable, IteratorAggregate
 
     public function set(string $path, $value) : Dot
     {
-        if (empty($path)) {
-            throw new InvalidArgumentException("can't set data, path is empty");
-        }
-
         $keys = explode($path);
 
         if ($keys === false) {
@@ -108,10 +100,6 @@ class Dot implements JsonSerializable, IteratorAggregate
 
     public function contains(string $path) : bool
     {
-        if (empty($path)) {
-            throw new InvalidArgumentException("path can't be empty");
-        }
-
         $keys = explode($path);
 
         if ($keys === false) {

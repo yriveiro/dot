@@ -17,13 +17,9 @@ class DotTest extends TestCase
         $this->assertInstanceOf(Dot::class, $this->dot, 'dot must be an instance of ' . Dot::class);
     }
 
-    /**
-     * @expectedException InvalidArgumentException
-     * @expectedMessage path can't be empty
-     */
     public function testSearchEmptyPath()
     {
-        $this->dot->get('');
+        $this->assertEquals(null, $this->dot->get(''));
     }
 
     public function testSearchNotExistingPath()
@@ -87,13 +83,9 @@ class DotTest extends TestCase
         $this->assertEquals(1, $dot->set('foo.bar', 1)->get('foo.bar'));
     }
 
-    /**
-     * @expectedException InvalidArgumentException
-     * @expectedMessage path can't be empty
-     */
     public function testSetEmptyKey()
     {
-        $this->dot->set('', false);
+        $this->assertFalse($this->dot->set('', false)->get(''));
     }
 
     public function testContainsKey()
@@ -110,13 +102,10 @@ class DotTest extends TestCase
         $this->assertFalse($this->dot->contains('not-found'));
     }
 
-    /**
-     * @expectedException InvalidArgumentException
-     * @expectedMessage path can't be empty
-     */
     public function testContainsWithEmptyKey()
     {
-        $this->dot->contains('');
+        $this->dot->set('', 'foo');
+        $this->assertTrue($this->dot->contains(''));
     }
 
     public function testMutableSet()
