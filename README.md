@@ -4,21 +4,21 @@ Dot has a simple goal, give you a dictionary like structure that you can query u
 
 # API
 
-### __construct(array $data = [], $inmutable = false)
-
-The constructor of Dot library.
-
-##### Parameters
-* `data`: you can bootstrap your Dot structure with existing data.
-* `inmutable`: if true, every time you call set method, a new instance will be returned, useful when the structure is shared along multiples objects (more about this in the examples).
-
-
 ### fromJson(string $data) : Dot
 
-This static method took a json encoded string and return the repective data as a Dot instance.
+This **static** method took a json encoded string and returns the repective data as a Dot instance.
 
 ##### Parameters
 * `data`: a json encoded string and return the repective data as a Dot instance.
+
+### toJson(string $path = null, $flags = 0)
+
+This method returns the given key as json.
+
+#### Parameters
+
+* `path`: the path we wan't to get as json, if null is passed will return all data.
+* `flags`: the flags that PHP json_encode function accept.
 
 
 ### get(string $path, $default = null)
@@ -30,7 +30,7 @@ This method return the value of a given path, if the path doesn't exists will re
 * `default`: the default value in the case of path doesn't exists.
 
 
-### have(string $path) : bool
+### contains(string $path) : bool
 
 This method checks if a given path exists into Dot.
 
@@ -49,7 +49,9 @@ This method set a value using the given path, if Dot structure is initialize as 
 
 # Usage
 
-As an empty structure:
+Dot works in two modes: **mutable** and **inmutable**.
+
+The **mutable** mode is the default mode, and most probably the right mode to use in 90% of the uses cases. In this mode, all set operations are done over the same instance of Dot.
 
 ```php
 $dot = new Yriveiro\Dot();
@@ -60,9 +62,50 @@ var_dump($dot->get('foo.bar'));
 
 >>> result: 'c'
 >>> result: ['a', 'b', 'c']
+
+// as mutable, Dot has the followed behavior
+
+$objectA = $dot->set('foo.bar', []);
+
+var_dump($dot->get('foo.bar');
+var_dump($objectA->get('foo.bar');
+
+// $objectA and $dot are the same instance.
+>>> result: []
+>>> result: []
 ```
 
-The same but bootstraping the Dot instance at creation time:
+The **inmutable** mode aims to allow Dot to be shared between instance objects without side effects. In PHP, objects are passed to methods by reference by default.
+
+```php
+$dot = new Yriveiro\Dot([], true);
+
+// first difference, you allways need to store the return
+$dot = $dot->set('foo.bar', ['a', 'b', 'c']);
+
+var_dump($dot->get('foo.bar.2'));
+var_dump($dot->get('foo.bar'));
+
+>>> result: 'c'
+>>> result: ['a', 'b', 'c']
+
+// as inmutable, Dot has the followed behavior
+
+$objectA = $dot->set('foo.bar', ['a'];
+$objectB = $dot->set('foo.bar', ['b'];
+
+var_dump($objectA->get('foo.bar');
+var_dump($objectB->get('foo.bar');
+var_dump($dot->get('foo.bar');
+
+// $objectA, $objectB and $dot are different instance.
+>>> result: ['a']
+>>> result: ['b']
+>>> result: ['a', 'b', 'c']
+
+```
+
+It's possible initialize Dot with an array if necessary:
 
 ```php
 $dot = new Yriveiro\Dot(['foo' => ['bar' => ['a', 'b', 'c']]);
