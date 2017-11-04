@@ -1,6 +1,7 @@
 <?php
 namespace Yriveiro\Dot\Tests;
 
+use ArrayIterator;
 use Yriveiro\Dot\Dot;
 use PHPUnit\Framework\TestCase;
 
@@ -169,5 +170,10 @@ class DotTest extends TestCase
         $this->dot->set('foo', 'bar');
 
         $this->assertEquals($jsonString, json_encode($this->dot));
+    }
+
+    public function testArrayIteratorInterface()
+    {
+        $this->assertInstanceOf(ArrayIterator::class, $this->dot->getIterator());
     }
 }

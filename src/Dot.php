@@ -1,6 +1,8 @@
 <?php
 namespace Yriveiro\Dot;
 
+use ArrayIterator;
+use IteratorAggregate;
 use RuntimeException;
 use InvalidArgumentException;
 use JsonSerializable;
@@ -8,7 +10,7 @@ use Yriveiro\Dot\filter;
 use Yriveiro\Dot\explode;
 use Yriveiro\Dot\json_error;
 
-class Dot implements JsonSerializable
+class Dot implements JsonSerializable, IteratorAggregate
 {
     const FOUND = 0xCAFE;
 
@@ -144,5 +146,15 @@ class Dot implements JsonSerializable
     public function jsonSerialize()
     {
         return $this->data;
+    }
+
+     /**
+     * Implmentation of ArrayIterator interface
+     *
+     * @return \ArrayIterator
+     */
+    public function getIterator() : ArrayIterator
+    {
+        return new ArrayIterator($this->data);
     }
 }
