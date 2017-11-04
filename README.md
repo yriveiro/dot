@@ -105,7 +105,7 @@ var_dump($dot->get('foo.bar');
 
 ```
 
-It's possible initialize Dot with an array if necessary:
+It's possible also, initialize Dot with an array if necessary:
 
 ```php
 $dot = new Yriveiro\Dot(['foo' => ['bar' => ['a', 'b', 'c']]);
