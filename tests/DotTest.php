@@ -140,6 +140,20 @@ class DotTest extends TestCase
         $this->assertEquals('bar', $dot->get('foo'));
     }
 
+    public function testToJsonNoPathDefined()
+    {
+        $dot = Dot::fromJson('{"foo":"bar"}');
+
+        $this->assertEquals('{"foo":"bar"}', $dot->toJson());
+    }
+
+    public function testToJsonPathDefined()
+    {
+        $dot = Dot::fromJson('{"foo":"bar","foo2":{"key":"value"}}');
+
+        $this->assertEquals('{"key":"value"}', $dot->toJson('foo2'));
+    }
+
     /**
      * @expectedException RuntimeException
      * @expectedMessage json_decode returns: Syntax error

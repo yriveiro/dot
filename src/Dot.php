@@ -132,6 +132,15 @@ class Dot implements JsonSerializable
         return new static($data);
     }
 
+    public function toJson(string $path = null, $flags = 0)
+    {
+        if (is_null($path)) {
+            return json_encode($this, $flags);
+        }
+
+        return json_encode($this->get($path), $flags);
+    }
+
     public function jsonSerialize()
     {
         return $this->data;
