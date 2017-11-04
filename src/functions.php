@@ -1,8 +1,6 @@
 <?php
 namespace Yriveiro\Dot;
 
-const SEPARATOR = '/[:\.]/';
-
 function filter(array $data, array $keys, $default = null)
 {
     foreach ($keys as $key) {
@@ -17,9 +15,9 @@ function filter(array $data, array $keys, $default = null)
 }
 
 
-function explode($path) : array
+function explode($path, $delimiter = '.') : array
 {
-    return preg_split(SEPARATOR, $path);
+    return \explode($delimiter, $path);
 }
 
 /**
