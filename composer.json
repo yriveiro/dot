@@ -1,6 +1,7 @@
 {
     "name": "yriveiro/dot",
     "description": "Dot access for nested structures",
+    "keywords": ["dot", "dot notation", "dotted access", "dot syntaxt", "dot structure"],
     "type": "library",
     "license": "MIT",
     "minimum-stability": "stable",
