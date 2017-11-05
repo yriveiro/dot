@@ -1,9 +1,11 @@
-# Dot. Dotted access made simple
+# Dot - Dotted access made simple
 
 Dot has a simple goal, give you a dictionary like structure that you can query using dotted syntax.
 
+[![License](https://poser.pugx.org/yriveiro/dot/license)](https://packagist.org/packages/yriveiro/dot)
 [![Build Status](https://travis-ci.org/yriveiro/dot.svg?branch=master)](https://travis-ci.org/yriveiro/dot)
 [![Coverage Status](https://coveralls.io/repos/github/yriveiro/dot/badge.svg?branch=master)](https://coveralls.io/github/yriveiro/dot?branch=master)
+[![Total Downloads](https://poser.pugx.org/yriveiro/dot/downloads)](https://packagist.org/packages/yriveiro/dot)
 
 # API
 
