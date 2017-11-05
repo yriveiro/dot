@@ -2,6 +2,9 @@
 
 Dot has a simple goal, give you a dictionary like structure that you can query using dotted syntax.
 
+[![Build Status](https://travis-ci.org/yriveiro/dot.svg?branch=master)](https://travis-ci.org/yriveiro/dot)
+[![Coverage Status](https://coveralls.io/repos/github/yriveiro/dot/badge.svg?branch=master)](https://coveralls.io/github/yriveiro/dot?branch=master)
+
 # API
 
 ### fromJson(string $data) : Dot
