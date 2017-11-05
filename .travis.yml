@@ -17,8 +17,8 @@ install:
   - composer install --prefer-source --dev
 
 script:
-  - mkdir -p build/
-  - vendor/bin/phpunit --coverage-clover build/clover.xml tests/
+  - mkdir -p build/logs
+  - vendor/bin/phpunit --coverage-clover build/logs/clover.xml tests/
 
 after_script:
   - php vendor/bin/coveralls -v
