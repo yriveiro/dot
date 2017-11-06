@@ -12,7 +12,7 @@ interface DotInterface
      *
      * @throws RuntimeException
      */
-    public static function fromJson(string $data) : Dot;
+    public static function fromJson(string $data) : DotInterface;
 
     /**
      * Gets the value of a given path, if the path doesn't exists and default
@@ -35,7 +35,7 @@ interface DotInterface
      *
      * @throws InvalidArgumentException
      */
-    public function set(string $path, $value) : Dot;
+    public function set(string $path, $value) : DotInterface;
 
     /**
      * Checks if a given path exists into Dot.
