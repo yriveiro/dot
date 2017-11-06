@@ -7,23 +7,43 @@ use RuntimeException;
 use InvalidArgumentException;
 use JsonSerializable;
 use Yriveiro\Dot\filter;
+use Yriveiro\Dot\DotInterface;
 use Yriveiro\Dot\explode;
 use Yriveiro\Dot\json_error;
 
-class Dot implements JsonSerializable, IteratorAggregate
+class Dot implements DotInterface, JsonSerializable, IteratorAggregate
 {
     const FOUND = 0xCAFE;
 
+    /**
+     * Internal storage
+     *
+     * @var array
+     */
     protected $data = [];
 
+    /**
+     * Indicates if Dot is configured as inmutable or mutable mode
+     *
+     * @var boolean
+     */
     protected $inmutable;
 
+    /**
+     * Constructor
+     *
+     * @param array $data If not emtpy it will boostrap Dot with the given data
+     * @param boolean $inmutable If true Dot will work as inmutable structure
+     */
     public function __construct(array $data = [], $inmutable = false)
     {
         $this->data = $data;
         $this->inmutable = $inmutable;
     }
 
+    /**
+     * {@inheritdoc}
+     */
     public function get(string $path, $default = null)
     {
         $keys = explode($path);
@@ -35,7 +55,10 @@ class Dot implements JsonSerializable, IteratorAggregate
         return filter($this->data, $keys, $default);
     }
 
-    public function set(string $path, $value) : Dot
+    /**
+     * {@inheritdoc}
+     */
+    public function set(string $path, $value) : DotInterface
     {
         $keys = explode($path);
 
@@ -50,7 +73,7 @@ class Dot implements JsonSerializable, IteratorAggregate
         return $this->setMutable($keys, $value);
     }
 
-    private function setInmutable(array $keys, $value) : Dot
+    private function setInmutable(array $keys, $value) : DotInterface
     {
         $data = $this->data;
         $chunk =& $data;
@@ -75,7 +98,7 @@ class Dot implements JsonSerializable, IteratorAggregate
     }
 
 
-    private function setMutable(array $keys, $value) : Dot
+    private function setMutable(array $keys, $value) : DotInterface
     {
         $chunk =& $this->data;
 
@@ -98,6 +121,9 @@ class Dot implements JsonSerializable, IteratorAggregate
         return $this;
     }
 
+    /**
+     * {@inheritdoc}
+     */
     public function contains(string $path) : bool
     {
         $keys = explode($path);
@@ -111,7 +137,10 @@ class Dot implements JsonSerializable, IteratorAggregate
         return ($result != self::FOUND);
     }
 
-    public static function fromJson(string $data) : Dot
+    /**
+     * {@inheritdoc}
+     */
+    public static function fromJson(string $data) : DotInterface
     {
         $data = json_decode($data, true);
 
@@ -122,7 +151,10 @@ class Dot implements JsonSerializable, IteratorAggregate
         return new static($data);
     }
 
-    public function toJson(string $path = null, $flags = 0)
+    /**
+     * {@inheritdoc}
+     */
+    public function toJson(string $path = null, int $flags = 0) : string
     {
         if (is_null($path)) {
             return json_encode($this, $flags);
@@ -131,12 +163,15 @@ class Dot implements JsonSerializable, IteratorAggregate
         return json_encode($this->get($path), $flags);
     }
 
+    /**
+     * {@inheritdoc}
+     */
     public function jsonSerialize()
     {
         return $this->data;
     }
 
-     /**
+    /**
      * Implmentation of ArrayIterator interface
      *
      * @return \ArrayIterator
