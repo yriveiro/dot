@@ -1,9 +1,19 @@
 <?php
 namespace Yriveiro\Dot;
 
-function filter(array $data, array $keys, $default = null)
+/**
+ * Filters an input data an returns the value of the given path, if path doesn't
+ * exists returns the default value.
+ *
+ * @param array        $data    input data
+ * @param array        $path    the path to filter
+ * @param null | mixed $default the default return value if path do not exists
+ *
+ * @return mixed
+ */
+function filter(array $data, array $path, $default = null)
 {
-    foreach ($keys as $key) {
+    foreach ($path as $key) {
         if (!isset($data[$key])) {
             return $default;
         }
@@ -12,12 +22,6 @@ function filter(array $data, array $keys, $default = null)
     }
 
     return $data;
-}
-
-
-function explode($path, $delimiter = '.') : array
-{
-    return \explode($delimiter, $path);
 }
 
 /**

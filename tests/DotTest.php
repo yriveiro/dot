@@ -7,6 +7,8 @@ use PHPUnit\Framework\TestCase;
 
 class DotTest extends TestCase
 {
+    private $dot;
+
     public function setUp()
     {
         $this->dot = new Dot();
