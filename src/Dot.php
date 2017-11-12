@@ -43,8 +43,17 @@ class Dot implements DotInterface, JsonSerializable, IteratorAggregate
     public function get(string $path, $default = null)
     {
         $keys = explode('.', $path);
+        $data = $this->data;
 
-        return filter($this->data, $keys, $default);
+        foreach ($keys as $key) {
+            if (!isset($data[$key])) {
+                return $default;
+            }
+
+            $data = $data[$key];
+        }
+
+        return $data;
     }
 
     /**
@@ -115,7 +124,7 @@ class Dot implements DotInterface, JsonSerializable, IteratorAggregate
     {
         $check = crc32(self::MAGIC . random_int(0, 10000));
 
-        return (filter($this->data, explode('.', $path), $check) !== $check);
+        return ($this->get($path, $check) !== $check);
     }
 
     /**

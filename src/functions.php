@@ -2,29 +2,6 @@
 namespace Yriveiro\Dot;
 
 /**
- * Filters an input data an returns the value of the given path, if path doesn't
- * exists returns the default value.
- *
- * @param array        $data    input data
- * @param array        $path    the path to filter
- * @param null | mixed $default the default return value if path do not exists
- *
- * @return mixed
- */
-function filter(array $data, array $path, $default = null)
-{
-    foreach ($path as $key) {
-        if (!isset($data[$key])) {
-            return $default;
-        }
-
-        $data = $data[$key];
-    }
-
-    return $data;
-}
-
-/**
  * @codeCoverageIgnore
  */
 function json_error($error)
