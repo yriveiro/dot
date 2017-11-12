@@ -9,7 +9,7 @@ use JsonSerializable;
 
 class Dot implements DotInterface, JsonSerializable, IteratorAggregate
 {
-    const FOUND = 0xCAFE;
+    const MAGIC = 0xCAFE;
 
     /**
      * Internal storage.
@@ -113,11 +113,9 @@ class Dot implements DotInterface, JsonSerializable, IteratorAggregate
      */
     public function contains(string $path): bool
     {
-        $keys = explode('.', $path);
+        $check = crc32(self::MAGIC . random_int(0, 10000));
 
-        $result = filter($this->data, $keys, self::FOUND);
-
-        return self::FOUND !== $result;
+        return (filter($this->data, explode('.', $path), $check) !== $check);
     }
 
     /**
