@@ -1,3 +1,4 @@
 /vendor/
 .padawan
 /build/
+.DS_Store
