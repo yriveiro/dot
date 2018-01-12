@@ -1,18 +1,12 @@
 <?php
 namespace Yriveiro\Dot;
 
+/**
+ * This interface exposes the core method to be implement by a Dot instance.
+ */
 interface DotInterface
 {
-    /**
-     * Creates a Dot instace using json data as input.
-     *
-     * @param string $data json encoded data
-     *
-     * @return Yriveiro\Dot
-     *
-     * @throws RuntimeException
-     */
-    public static function fromJson(string $data): self;
+    const MAGIC = 0xDECAFE;
 
     /**
      * Gets the value of a given path, if the path doesn't exists and default
@@ -32,7 +26,7 @@ interface DotInterface
      * @param string $path  path where the value will be stored
      * @param mixed  $value value that will be store
      *
-     * @return Yriveiro\Dot
+     * @return DotInterface
      *
      * @throws InvalidArgumentException
      */
@@ -50,12 +44,16 @@ interface DotInterface
     public function contains(string $path): bool;
 
     /**
-     * Return the given path as json data.
+     * Wipe all data inside Dot storage.
      *
-     * @param null | string $path  path we want as json
-     * @param int           $flags PHP json flags
-     *
-     * @return string
+     * @return DotInterface
      */
-    public function toJson(string $path = null, int $flags = 0): string;
+    public function reset(): self;
+
+    /**
+     * Remove a key from Dot internal storage.
+     *
+     * @return DotInterface
+     */
+    public function delete(string $path): self;
 }

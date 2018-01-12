@@ -5,10 +5,15 @@ require __DIR__ . '/../vendor/autoload.php';
 use Yriveiro\Dot\Dot;
 
 /**
- * This example aims show how to use Dot in a general way.
+ * This example aims to show how to use Dot in a general way.
+ *
+ * Notes:
+ *
+ *  - In this example we are using a mutable instance of Dot object, conf1, conf2
+ *    and dot point to the same instance.
  */
 
-$dot = new Dot(['server' => ['host' => 'localhost', 'port' => 5000]]);
+$dot = Dot::create(['server' => ['host' => 'localhost', 'port' => 5000]]);
 
 $conf1 = $dot->set('api-endpoint', '/api/v1/');
 $conf2 = $dot->set('api-endpoint', '/api/v2/');

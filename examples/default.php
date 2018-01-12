@@ -5,7 +5,11 @@ require __DIR__ . '/../vendor/autoload.php';
 use Yriveiro\Dot\Dot;
 
 /**
- * This example aims show how use default values.
+ * This example aims is show how use default values.
+ *
+ * Notes:
+ *
+ *  - this example will create a mutable Dot instance.
  */
 
 $data = [
@@ -17,7 +21,7 @@ $data = [
     'retries' => 5
 ];
 
-$dot = Dot::fromJson(json_encode($data));
+$dot = Dot::create($data);
 
 echo 'host: ' . $dot->get('server.host') . PHP_EOL;
 echo 'retries: ' . $dot->get('retries') . PHP_EOL;

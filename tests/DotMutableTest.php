@@ -3,20 +3,35 @@ namespace Yriveiro\Dot\Tests;
 
 use ArrayIterator;
 use Yriveiro\Dot\Dot;
+use Yriveiro\Dot\DotInterface;
+use Yriveiro\Dot\DotMutable;
 use PHPUnit\Framework\TestCase;
 
-class DotTest extends TestCase
+class DotMutableTest extends TestCase
 {
     private $dot;
 
     public function setUp()
     {
-        $this->dot = new Dot();
+        $this->dot = Dot::create();
     }
 
-    public function testCreateInstance()
+    public function testDotIsDotInterface()
     {
-        $this->assertInstanceOf(Dot::class, $this->dot, 'dot must be an instance of ' . Dot::class);
+        $this->assertInstanceOf(
+            DotInterface::class,
+            $this->dot,
+            'dot must be an instance of ' . DotInterface::class
+        );
+    }
+
+    public function testDotIsDotMutable()
+    {
+        $this->assertInstanceOf(
+            DotInterface::class,
+            $this->dot,
+            'dot must be an instance of ' . DotMutable::class
+        );
     }
 
     public function testSearchEmptyPath()
@@ -36,28 +51,28 @@ class DotTest extends TestCase
 
     public function testGetExistingKeyOneLevel()
     {
-        $dot = new Dot(['foo' => 1]);
+        $dot = Dot::create(['foo' => 1]);
 
         $this->assertEquals(1, $dot->get('foo'));
     }
 
     public function testGetExistingKeyTwoLevels()
     {
-        $dot = new Dot(['foo' => ['bar' => 1]]);
+        $dot = Dot::create(['foo' => ['bar' => 1]]);
 
         $this->assertEquals(1, $dot->get('foo.bar'));
     }
 
     public function testGetExistingKeyTreeLevelsThirdAsIndex()
     {
-        $dot = new Dot(['foo' => ['bar' => [1]]]);
+        $dot = Dot::create(['foo' => ['bar' => [1]]]);
 
         $this->assertEquals(1, $dot->get('foo.bar.0'));
     }
 
     public function testGetExistingKeyTreeLevelsThridAsArray()
     {
-        $dot = new Dot(['foo' => ['bar' => [1]]]);
+        $dot = Dot::create(['foo' => ['bar' => [1]]]);
 
         $this->assertEquals([1], $dot->get('foo.bar'));
     }
@@ -69,20 +84,11 @@ class DotTest extends TestCase
         $this->assertEquals('bar', $this->dot->get('foo'));
     }
 
-    public function testMutableSetValueWithMultiplePathLevel()
+    public function testSetValueWithMultiplePathLevel()
     {
         $this->dot->set('foo.bar', 1);
 
         $this->assertEquals(1, $this->dot->get('foo.bar'));
-    }
-
-    public function testInmutableSetValueWithMultiplePathLevel()
-    {
-        $dot = new Dot([], true);
-
-        $dot = $dot->set('foo.bar', 1);
-
-        $this->assertEquals(1, $dot->set('foo.bar', 1)->get('foo.bar'));
     }
 
     public function testSetEmptyKey()
@@ -110,49 +116,41 @@ class DotTest extends TestCase
         $this->assertTrue($this->dot->contains(''));
     }
 
-    public function testMutableSet()
+    public function testEnsureSetUseSameDotInstance()
     {
         $that = $this->dot->set('foo', 'bar');
 
         $this->assertTrue($that === $this->dot);
     }
 
-    public function testInmutableSet()
+    public function testLoadJson()
     {
-        $dot = new Dot([], true);
-        $inmutableDot = $dot->set('foo', 'bar');
-
-        $this->assertFalse($inmutableDot === $dot);
-    }
-
-    public function testFromJson()
-    {
-        $dot = Dot::fromJson('{"foo":"bar"}');
+        $dot = Dot::loadJson('{"foo":"bar"}');
 
         $this->assertEquals('bar', $dot->get('foo'));
     }
 
     public function testToJsonNoPathDefined()
     {
-        $dot = Dot::fromJson('{"foo":"bar"}');
+        $dot = Dot::loadJson('{"foo":"bar"}');
 
         $this->assertEquals('{"foo":"bar"}', $dot->toJson());
     }
 
     public function testToJsonPathDefined()
     {
-        $dot = Dot::fromJson('{"foo":"bar","foo2":{"key":"value"}}');
+        $dot = Dot::loadJson('{"foo":"bar","foo2":{"key":"value"}}');
 
         $this->assertEquals('{"key":"value"}', $dot->toJson('foo2'));
     }
 
     /**
-     * @expectedException RuntimeException
+     * @expectedException \RuntimeException
      * @expectedMessage json_decode returns: Syntax error
      */
-    public function testFromJsonWithInvalidJson()
+    public function testLoadJsonWithInvalidJson()
     {
-        $dot = Dot::fromJson('"foo":"bar"');
+        $dot = Dot::loadJson('"foo":"bar"');
     }
 
     public function testJsonSerialize()
@@ -166,5 +164,22 @@ class DotTest extends TestCase
     public function testArrayIteratorInterface()
     {
         $this->assertInstanceOf(ArrayIterator::class, $this->dot->getIterator());
+    }
+
+    public function testReset()
+    {
+        $dot = Dot::loadJson('{"foo":"bar","foo2":{"key":"value"}}');
+        $dot->reset();
+        $this->assertNull($dot->get('foo2.key'));
+    }
+
+    public function testDeleteKey()
+    {
+        $dot = Dot::loadJson('{"foo":"bar","foo2":{"key":"value"}}');
+
+        $dot->delete('foo2.key');
+
+        $this->assertEquals([], $dot->get('foo2'));
+        $this->assertEquals('bar', $dot->get('foo'));
     }
 }

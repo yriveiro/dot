@@ -8,28 +8,28 @@ function json_error($error)
 {
     switch ($error) {
         case JSON_ERROR_NONE:
-            return 'No error has occurred';
+            return 'no error has occurred';
         case JSON_ERROR_DEPTH:
-            return 'The maximum stack depth has been exceeded';
+            return 'the maximum stack depth has been exceeded';
         case JSON_ERROR_STATE_MISMATCH:
-            return 'Invalid or malformed JSON';
+            return 'invalid or malformed JSON';
         case JSON_ERROR_CTRL_CHAR:
-            return 'Control character error, possibly incorrectly encoded';
+            return 'control character error, possibly incorrectly encoded';
         case JSON_ERROR_SYNTAX:
-            return 'Syntax error';
+            return 'syntax error';
         case JSON_ERROR_UTF8:
-            return 'Malformed UTF-8 characters, possibly incorrectly encoded';
+            return 'malformed UTF-8 characters, possibly incorrectly encoded';
         case JSON_ERROR_RECURSION:
-            return 'One or more recursive references in the value to be encoded';
+            return 'one or more recursive references in the value to be encoded';
         case JSON_ERROR_INF_OR_NAN:
-            return 'One or more NAN or INF values in the value to be encoded';
+            return 'one or more NAN or INF values in the value to be encoded';
         case JSON_ERROR_UNSUPPORTED_TYPE:
-            return 'A value of a type that cannot be encoded was given';
+            return 'a value of a type that cannot be encoded was given';
         case JSON_ERROR_INVALID_PROPERTY_NAME:
-            return 'A property name that cannot be encoded was given';
+            return 'a property name that cannot be encoded was given';
         case JSON_ERROR_UTF16:
-            return 'Malformed UTF-16 characters, possibly incorrectly encoded';
+            return 'malformed UTF-16 characters, possibly incorrectly encoded';
     }
 
-    return 'Incorrect json error code';
+    return 'incorrect json error code';
 }

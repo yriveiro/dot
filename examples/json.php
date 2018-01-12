@@ -17,7 +17,7 @@ $data = [
     'retries' => 5
 ];
 
-$dot = Dot::fromJson(json_encode($data));
+$dot = Dot::loadJson(json_encode($data));
 
 echo 'host: ' . $dot->get('server.host') . PHP_EOL;
 echo 'retries: ' . $dot->get('retries') . PHP_EOL;
