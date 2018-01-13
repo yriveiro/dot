@@ -56,4 +56,16 @@ interface DotInterface
      * @return DotInterface
      */
     public function delete(string $path): self;
+
+    /**
+     * Returns the given path as Json data.
+     *
+     * @param null | string $path  path we want as Json data.
+     * @param int           $flags PHP json flags.
+     *
+     * @return string
+     *
+     * @throws RuntimeException
+     */
+    public function toJson(string $path = null, int $flags = 0) : string;
 }
