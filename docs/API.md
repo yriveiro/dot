@@ -155,6 +155,10 @@ This method does a json encode operation over the given path and return the valu
 
 * `string | null`: a JSON encoded data, null in case the json_encode operation fails.
 
+##### Throws
+
+* `RuntimeException`
+
 ### getIterator() : ArrayIterator
 
 This method is the implementation of the PHP `ArrayIterator` interface.

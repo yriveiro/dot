@@ -27,8 +27,6 @@ interface DotInterface
      * @param mixed  $value value that will be store
      *
      * @return DotInterface
-     *
-     * @throws InvalidArgumentException
      */
     public function set(string $path, $value): self;
 
@@ -38,8 +36,6 @@ interface DotInterface
      * @param string $path path we are looking for
      *
      * @return bool
-     *
-     * @throws InvalidArgumentException
      */
     public function contains(string $path): bool;
 
