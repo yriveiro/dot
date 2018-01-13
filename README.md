@@ -9,8 +9,8 @@ Dot has a simple goal, give you access to data using dotted syntax.
 
 # Quick start documentation
 
-- [API](doc/API.md) - API reference.
-- [Examples](doc/Examples.md) - Examples of utilization.
+- [API](docs/API.md) - API reference.
+- [Examples](docs/Examples.md) - Examples of utilization.
 - [Contributing](CONTRIBUTING.md) - How to contribute to Dot project.
 - [Licence](LICENSE.md) - Copyright License.
 
