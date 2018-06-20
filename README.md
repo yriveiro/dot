@@ -22,7 +22,9 @@ The main features of Dot are:
 
 - Simplicity.
 - Easy to extend.
-- Works in two modes: mutable an inmutable.
+- Two modes of use: 
+  - mutable: the normal mode
+  - inmutable: with this mode you can safely share Dot instance between objects
 
 # Installation
 
